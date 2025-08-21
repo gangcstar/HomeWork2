@@ -1,6 +1,4 @@
-package org.example;
-
-import java.time.LocalDateTime;
+package org.example.model;
 
 public class SubTodo extends Todo {
     private Todo todo;

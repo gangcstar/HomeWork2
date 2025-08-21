@@ -1,17 +1,23 @@
 package org.example;
 
+import org.example.model.SubTodo;
+import org.example.model.Todo;
+import org.example.service.TodoManagerInMemory;
+
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+        Todo todo = new Todo("todo1");
+        Todo todo3 = new Todo("todo3");
+        SubTodo todo2 = new SubTodo("todo2", todo);
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
-        }
+        TodoManagerInMemory manager = new TodoManagerInMemory();
+        manager.add(todo);
+        manager.add(todo2);
+        manager.add(todo3);
+
+        System.out.println(manager.getAll());
+
     }
 }

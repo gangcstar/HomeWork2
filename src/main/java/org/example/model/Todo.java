@@ -1,4 +1,4 @@
-package org.example;
+package org.example.model;
 
 import org.example.util.Identifier;
 import org.example.util.Status;
@@ -24,6 +24,9 @@ public class Todo {
     public int getId() {
         return id;
     }
+    public Status getStatus() {
+        return status;
+    }
 
     public void addSubTodo(SubTodo todo) {
         subtodo.add(todo);
@@ -32,7 +35,7 @@ public class Todo {
 
     @Override
     public String toString() {
-        return "Todo" +
+        return "Todo " +
                 "id = " + id +
                 ", name = " + name +
                 ", date = " + date +
