@@ -1,23 +1,27 @@
 package org.example;
 
-import org.example.model.SubTodo;
 import org.example.model.Todo;
 import org.example.service.TodoManagerInMemory;
+
+import java.util.List;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
-        Todo todo = new Todo("todo1");
-        Todo todo3 = new Todo("todo3");
-        SubTodo todo2 = new SubTodo("todo2", todo);
+        Todo subtodo1 = new Todo("Подзадача1", null);
+        Todo subtodo2 = new Todo("Подзадача2", null);
+        Todo todo1 = new Todo("Главная задача", List.of(subtodo1, subtodo2));
 
         TodoManagerInMemory manager = new TodoManagerInMemory();
-        manager.add(todo);
-        manager.add(todo2);
-        manager.add(todo3);
+        manager.add(subtodo1);
+        manager.add(subtodo2);
+        manager.add(todo1);
+
 
         System.out.println(manager.getAll());
+        manager.complete(3);
+        System.out.println(todo1);
 
     }
 }

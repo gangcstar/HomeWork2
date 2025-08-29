@@ -1,6 +1,7 @@
 package org.example.service;
 
 import org.example.model.Todo;
+import org.example.util.Status;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,6 +29,7 @@ public class TodoManagerInMemory implements TodoManager {
 
     @Override
     public void complete(int id) {
-
+        notes.get(id).setStatus(Status.DONE);
+        notes.get(id).updateStatus();
     }
 }
