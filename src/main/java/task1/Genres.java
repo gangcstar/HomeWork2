@@ -1,0 +1,36 @@
+package task1;
+
+public enum Genres {
+        DOCUMENTARY,
+        THRILLER,
+        SCIENCE_FICTION,
+        HORROR_THRILLER,
+        MYSTERY,
+        ACTION,
+        COMEDY,
+        HEIST_FILM,
+        MUSICAL,
+        DRAMA,
+        ROMANTIC_COMEDY,
+        ACTION_COMEDY,
+        HORROR_ANTHOLOGY,
+        POLITICAL_THRILLER,
+        SUPERHERO_COMEDY,
+        ROMANCE_DRAMA,
+        ANIME,
+        HEIST,
+        FAMILY_FILM,
+        ANIMATION,
+        ACTION_THRILLER,
+        TEEN_COMEDY_DRAMA,
+        ROMANTIC_DRAMA,
+        AFTERSHOW,
+        SCIENCE_FICTION_ADVENTURE,
+        VARIETY_SHOW,
+        COMEDY_DRAMA,
+        SUPERNATURAL_DRAMA,
+        ROMANTIC_TEENAGE_DRAMA,
+        CRIME_DRAMA,
+
+
+}

@@ -1,7 +1,7 @@
-package org.example;
+package task2;
 
-import org.example.model.Todo;
-import org.example.service.TodoManagerInMemory;
+import task2.model.Todo;
+import task2.service.TodoManagerInMemory;
 
 import java.util.List;
 

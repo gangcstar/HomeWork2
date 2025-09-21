@@ -1,7 +1,7 @@
-package org.example.model;
+package task2.model;
 
-import org.example.util.Identifier;
-import org.example.util.Status;
+import task2.util.Identifier;
+import task2.util.Status;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

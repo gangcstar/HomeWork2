@@ -1,5 +1,5 @@
-package org.example.service;
-import org.example.model.Todo;
+package task2.service;
+import task2.model.Todo;
 import java.util.List;
 
 public interface TodoManager {
