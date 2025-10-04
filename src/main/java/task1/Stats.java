@@ -16,12 +16,11 @@ public class Stats {
     static MovieStatsService stats;
     public static void main(String[] args) {
         reader = new CsvReaderImpl();
+        stats = new MovieStatsServiceImpl();
         List<Movie> movies = reader.readFile(path);
-        //List<Movie> lists =  reader.readFile(path);
-        //stats.countMoviesByGenre(lists);
-
-        for (int i = 0; i < movies.size(); i++) {
-            System.out.println(movies.get(i));
+        Map<String, Integer> genreCount = stats.countMoviesByGenre(movies);
+        for (Map.Entry<String, Integer> entry : genreCount.entrySet()) {
+            System.out.println(entry.getKey() + ": " + entry.getValue());
         }
 
     }
