@@ -8,10 +8,10 @@ public class Movie {
     private LocalDate premiere;
     private int runtime;
     private double score;
-    private Languages language;
+    private String language;
 
 
-    public Movie(String name, String genre, LocalDate premiere, int runtime, double score, Languages language) {
+    public Movie(String name, String genre, LocalDate premiere, int runtime, double score, String language) {
         this.name = name;
         this.genre = genre;
         this.premiere = premiere;
@@ -64,11 +64,11 @@ public class Movie {
         this.score = score;
     }
 
-    public Languages getLanguage() {
+    public String getLanguage() {
         return language;
     }
 
-    public void setLanguage(Languages language) {
+    public void setLanguage(String language) {
         this.language = language;
     }
 
