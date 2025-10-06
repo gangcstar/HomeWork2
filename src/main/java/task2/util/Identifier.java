@@ -1,4 +1,4 @@
-package org.example.util;
+package task2.util;
 
 public enum Identifier {
         INSTANCE;

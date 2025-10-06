@@ -1,7 +1,7 @@
-package org.example.service;
+package task2.service;
 
-import org.example.model.Todo;
-import org.example.util.Status;
+import task2.model.Todo;
+import task2.util.Status;
 
 import java.util.ArrayList;
 import java.util.HashMap;
