@@ -18,10 +18,46 @@ public class Stats {
         reader = new CsvReaderImpl();
         stats = new MovieStatsServiceImpl();
         List<Movie> movies = reader.readFile(path);
+
+        //подсчет по жанрам
+        System.out.println("-=Подсчет по жанрам=-");
         Map<String, Integer> genreCount = stats.countMoviesByGenre(movies);
         for (Map.Entry<String, Integer> entry : genreCount.entrySet()) {
             System.out.println(entry.getKey() + ": " + entry.getValue());
         }
+        System.out.println();
 
+        //подсчет по языкам
+        System.out.println("-=Подсчет по языкам=-");
+        Map<String, Integer> langCount = stats.countMoviesByLanguage(movies);
+        for (Map.Entry<String, Integer> entry : langCount.entrySet()) {
+            System.out.println(entry.getKey() + ": " + entry.getValue());
+        }
+        System.out.println();
+
+        //топ популярных
+        System.out.println("-=Топ 5 популярных=-");
+        List<Movie> top5 = stats.countTopPopular(movies, 5);
+        for (Movie movie : top5) {
+            System.out.println(movie);
+        }
+        System.out.println();
+
+        //самый новый
+        System.out.println("-=Самый новый фильм=-");
+        Movie newest = stats.getNewestMovie(movies);
+        System.out.println(newest);
+        System.out.println();
+
+        //самый старый
+        System.out.println("-=Самый старый фильм=-");
+        Movie oldest = stats.getOldestMovie(movies);
+        System.out.println(oldest);
+        System.out.println();
+
+        //общая длительность
+        System.out.println("-=Общая длительность=-");
+        System.out.println(stats.getGeneralRuntime(movies));
+        System.out.println();
     }
 }
