@@ -1,6 +1,11 @@
-package org.example;
+package org.example.service;
 
+import org.example.model.Todo;
+import org.example.util.Status;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class TodoManagerInMemory implements TodoManager {
@@ -14,12 +19,17 @@ public class TodoManagerInMemory implements TodoManager {
     }
 
     @Override
-    public void getAll() {
-
+    public List<Todo> getAll() {
+        List<Todo> result = new ArrayList<>();
+        for (Todo todo : notes.values()) {
+            result.add(todo);
+        }
+        return result;
     }
 
     @Override
     public void complete(int id) {
-
+        notes.get(id).setStatus(Status.DONE);
+        notes.get(id).updateStatus();
     }
 }

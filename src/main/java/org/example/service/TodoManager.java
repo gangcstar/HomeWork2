@@ -1,9 +1,11 @@
-package org.example;
+package org.example.service;
+import org.example.model.Todo;
+import java.util.List;
 
 public interface TodoManager {
     void add(Todo todo);
 
-    void getAll();
+    List<Todo> getAll();
 
     void complete(int id);
 }
