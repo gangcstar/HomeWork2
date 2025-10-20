@@ -10,5 +10,7 @@ public interface MovieStatsService {
     Movie getNewestMovie(List<Movie> movie);
     Movie getOldestMovie(List<Movie> movie);
     String getGeneralRuntime(List<Movie> movie);
+    Map<Integer, Movie> getHighRankFilmOfYear(List<Movie> movies);
+    Map<Integer, Movie> getLowRankFilmOfYear(List<Movie> movies);
 
 }

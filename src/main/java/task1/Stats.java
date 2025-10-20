@@ -59,5 +59,22 @@ public class Stats {
         System.out.println("-=Общая длительность=-");
         System.out.println(stats.getGeneralRuntime(movies));
         System.out.println();
+
+        //фильмы с высоким рейтингом за каждый год
+        System.out.println("-=Фильмы с высоким рейтингом за каждый год=-");
+        Map<Integer, Movie> highRank = stats.getHighRankFilmOfYear(movies);
+        for (Map.Entry<Integer, Movie> entry : highRank.entrySet()) {
+            System.out.println("Год: " + entry.getKey() + ". Фильм: " + entry.getValue().getName() + ". Оценка: " + entry.getValue().getScore());
+        }
+        System.out.println();
+
+        //фильмы с низким рейтингом за каждый год
+        System.out.println("-=Фильмы с низким рейтингом за каждый год=-");
+        Map<Integer, Movie> lowRank = stats.getLowRankFilmOfYear(movies);
+        for (Map.Entry<Integer, Movie> entry : lowRank.entrySet()) {
+            System.out.println("Год: " + entry.getKey() + ". Фильм: " + entry.getValue().getName() + ". Оценка: " + entry.getValue().getScore());
+        }
+        System.out.println();
+
     }
 }

@@ -101,4 +101,34 @@ public class MovieStatsServiceImpl implements MovieStatsService{
         int totalDays = (int) Math.round(totalMinutes / 1440.0);
         return String.format("Общая длительность: %d мин (%d часов, %d дней)", totalMinutes, totalHours, totalDays);
     }
+
+    @Override
+    public Map<Integer, Movie> getHighRankFilmOfYear(List<Movie> movies) {
+        Map<Integer, Movie> highRank = new HashMap<>();
+        for (Movie movie : movies) {
+            if (movie.getPremiere() == null) continue;
+            int year = movie.getPremiere().getYear();
+            Movie currentMax = highRank.get(year);
+            if (currentMax == null || movie.getScore() > currentMax.getScore()) {
+                highRank.put(year, movie);
+            }
+        }
+        return highRank;
+    }
+
+    @Override
+    public Map<Integer, Movie> getLowRankFilmOfYear(List<Movie> movies) {
+        Map<Integer, Movie> lowRank = new HashMap<>();
+        for (Movie movie : movies) {
+            if (movie.getPremiere() == null) continue;
+            int year = movie.getPremiere().getYear();
+            Movie currentMin = lowRank.get(year);
+            if (currentMin == null || movie.getScore() < currentMin.getScore()) {
+                lowRank.put(year, movie);
+            }
+        }
+        return lowRank;
+    }
+
+
 }
