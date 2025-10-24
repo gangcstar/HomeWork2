@@ -6,9 +6,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.net.URI;
 import java.nio.file.Path;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Stats {
     static Path path = Path.of("src/main/resources/NetflixOriginals.csv");
@@ -76,5 +74,11 @@ public class Stats {
         }
         System.out.println();
 
+        //сортировка фильмов по длительности
+        System.out.println("-=Отсортированные по длительности фильмы=-");
+        Collections.sort(movies);
+        for (Movie movie : movies) {
+        System.out.println(movie);
+        }
     }
 }

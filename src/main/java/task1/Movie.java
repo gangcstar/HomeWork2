@@ -2,7 +2,7 @@ package task1;
 
 import java.time.LocalDate;
 
-public class Movie {
+public class Movie implements Comparable<Movie> {
     private String name ;
     private String genre;
     private LocalDate premiere;
@@ -80,5 +80,10 @@ public class Movie {
                 ", Длительность: " + getRuntime() +
                 ", Оценка: " + getScore() +
                 ", Язык: " + getLanguage() + ".";
+    }
+
+    @Override
+    public int compareTo(Movie otherMovie) {
+        return  this.runtime - otherMovie.runtime;
     }
 }

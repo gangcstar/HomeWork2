@@ -1,9 +1,6 @@
 package task1;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class MovieStatsServiceImpl implements MovieStatsService{
     @Override
@@ -129,6 +126,4 @@ public class MovieStatsServiceImpl implements MovieStatsService{
         }
         return lowRank;
     }
-
-
 }
