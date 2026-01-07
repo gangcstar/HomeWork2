@@ -1,15 +1,16 @@
 package task1;
 
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 
 public interface MovieStatsService {
-    Map<String, Integer> countMoviesByGenre(List<Movie> movie);
-    List<Movie> countTopPopular(List<Movie> movie, int topN);
-    Map<String, Integer> countMoviesByLanguage(List<Movie> movies);
-    Movie getNewestMovie(List<Movie> movie);
-    Movie getOldestMovie(List<Movie> movie);
-    String getGeneralRuntime(List<Movie> movie);
-    Map<Integer, Movie> getHighRankFilmOfYear(List<Movie> movies);
-    Map<Integer, Movie> getLowRankFilmOfYear(List<Movie> movies);
+    Map<String, Long> countMoviesByGenre(Path pathToFile);
+    List<Movie> countTopPopular(Path pathToFile, int topN);
+    Map<String, Long> countMoviesByLanguage(Path pathToFile);
+    Movie getNewestMovie(Path pathToFile);
+    Movie getOldestMovie(Path pathToFile);
+    String getGeneralRuntime(Path pathToFile);
+    Map<Integer, Movie> getHighRankFilmOfYear(Path pathToFile);
+    Map<Integer, Movie> getLowRankFilmOfYear(Path pathToFile);
 }

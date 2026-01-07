@@ -1,129 +1,101 @@
 package task1;
 
+import java.nio.file.Path;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.BinaryOperator;
+import java.util.stream.Collectors;
 
 public class MovieStatsServiceImpl implements MovieStatsService{
+    CsvReader reader;
+    public MovieStatsServiceImpl (CsvReader reader) {
+        this.reader = reader;
+    }
     @Override
-    public Map<String, Integer> countMoviesByGenre(List<Movie> movies) {
-        Map<String, Integer> genreCount = new HashMap<>();
-        for (Movie movie : movies) {
-            String genreStr = movie.getGenre();
-            if (genreStr != null && !genreStr.isEmpty()) {
-                String[] genres = genreStr.split(" / ");
-                for (String g : genres) {
-                    String trimmed = g.trim();
-                    if (!trimmed.isEmpty()) {
-                        Integer count = genreCount.get(trimmed);
-                        if (count == null) {
-                            genreCount.put(trimmed, 1);
-                        } else {
-                            genreCount.put(trimmed, count + 1);
-                        }
-                    }
-                }
-            }
-        }
+    public Map<String, Long> countMoviesByGenre(Path pathToFile) {
+        Map<String, Long> genreCount = reader.readFile(pathToFile).stream()
+                .filter(movie -> movie.getGenre() != null)
+                .collect(Collectors.groupingBy(Movie::getGenre,
+                        Collectors.counting()
+                        ));
+
         return genreCount;
     }
 
     @Override
-    public List<Movie> countTopPopular(List<Movie> movies, int topN) {
-        List<Movie> sortedMovies = new ArrayList<>(movies);
-        for (int i = 0; i < sortedMovies.size() - 1; i++) {
-            for (int j = 0; j < sortedMovies.size() - i - 1; j++) {
-                if (sortedMovies.get(j).getScore() < sortedMovies.get(j + 1).getScore()) {
-                    Movie temp = sortedMovies.get(j);
-                    sortedMovies.set(j, sortedMovies.get(j + 1));
-                    sortedMovies.set(j + 1, temp);
-                }
-            }
-        }
-        List<Movie> result = new ArrayList<>();
-        for (int i = 0; i < Math.min(topN, sortedMovies.size()); i++) {
-            result.add(sortedMovies.get(i));
-        }
-        return result;
+    public List<Movie> countTopPopular(Path pathToFile, int topN) {
+        List<Movie> sortedMoviesPopular = reader.readFile(pathToFile).stream()
+                .sorted(Comparator.comparingDouble(Movie::getScore).reversed())
+                .limit(topN)
+                .collect(Collectors.toList());
+
+        return sortedMoviesPopular;
     }
 
     @Override
-    public Map<String, Integer> countMoviesByLanguage(List<Movie> movies) {
-        Map<String, Integer> langCount = new HashMap<>();
-        for (Movie movie : movies) {
-            String lang = movie.getLanguage();
-            if (lang != null && !lang.isEmpty()) {
-                Integer count = langCount.get(lang);
-                if (count == null) {
-                    langCount.put(lang, 1);
-                } else {
-                    langCount.put(lang, count + 1);
-                }
-            }
-        }
+    public Map<String, Long> countMoviesByLanguage(Path pathToFile) {
+        Map<String, Long> langCount = reader.readFile(pathToFile).stream()
+                .filter(movie -> movie.getLanguage() != null)
+                .collect(Collectors.groupingBy(Movie::getLanguage,
+                        Collectors.counting()
+                ));
+
         return langCount;
     }
 
     @Override
-    public Movie getNewestMovie(List<Movie> movies) {
-        Movie newest = null;
-        for (Movie movie : movies) {
-            if (movie.getPremiere() != null) {
-                if (newest == null || movie.getPremiere().isAfter(newest.getPremiere())) {
-                    newest = movie;
-                }
-            }
-        }
+    public Movie getNewestMovie(Path pathToFile) {
+        Movie newest = reader.readFile(pathToFile).stream()
+                .max(Comparator.comparing(Movie::getPremiere))
+                .orElse(null);
         return newest;
     }
 
     @Override
-    public Movie getOldestMovie(List<Movie> movies) {
-        Movie oldest = null;
-        for (Movie movie : movies) {
-            if (movie.getPremiere() != null) {
-                if (oldest == null || movie.getPremiere().isBefore(oldest.getPremiere())) {
-                    oldest = movie;
-                }
-            }
-        }
+    public Movie getOldestMovie(Path pathToFile) {
+        Movie oldest = reader.readFile(pathToFile).stream()
+                .min(Comparator.comparing(Movie::getPremiere))
+                .orElse(null);
         return oldest;
     }
 
     @Override
-    public String getGeneralRuntime(List<Movie> movies) {
-        int totalMinutes = 0;
-        for (Movie movie : movies) {
-            totalMinutes += movie.getRuntime();
-        }
-        int totalHours = (int) Math.round(totalMinutes / 60.0);
-        int totalDays = (int) Math.round(totalMinutes / 1440.0);
-        return String.format("Общая длительность: %d мин (%d часов, %d дней)", totalMinutes, totalHours, totalDays);
+    public String getGeneralRuntime(Path pathToFile) {
+        int totalRuntime = reader.readFile(pathToFile).stream()
+                .mapToInt(Movie::getRuntime)
+                .sum();
+
+        int totalHours = (int) Math.round(totalRuntime / 60.0);
+        int totalDays = (int) Math.round(totalRuntime / 1440.0);
+        return String.format("Общая длительность: %d мин (%d часов, %d дней)", totalRuntime, totalHours, totalDays);
     }
 
     @Override
-    public Map<Integer, Movie> getHighRankFilmOfYear(List<Movie> movies) {
-        Map<Integer, Movie> highRank = new HashMap<>();
-        for (Movie movie : movies) {
-            if (movie.getPremiere() == null) continue;
-            int year = movie.getPremiere().getYear();
-            Movie currentMax = highRank.get(year);
-            if (currentMax == null || movie.getScore() > currentMax.getScore()) {
-                highRank.put(year, movie);
-            }
-        }
+    public Map<Integer, Movie> getHighRankFilmOfYear(Path pathToFile) {
+        Map<Integer, Movie> highRank = reader.readFile(pathToFile).stream()
+                .filter(f -> f.getPremiere() != null)
+                .collect(Collectors.toMap(
+                        movie -> movie.getPremiere().getYear(),
+                        movie -> movie,
+                        (movie1, movie2) -> movie1.getScore() > movie2.getScore()
+                            ? movie1 : movie2
+
+                ));
         return highRank;
     }
 
     @Override
-    public Map<Integer, Movie> getLowRankFilmOfYear(List<Movie> movies) {
-        Map<Integer, Movie> lowRank = new HashMap<>();
-        for (Movie movie : movies) {
-            if (movie.getPremiere() == null) continue;
-            int year = movie.getPremiere().getYear();
-            Movie currentMin = lowRank.get(year);
-            if (currentMin == null || movie.getScore() < currentMin.getScore()) {
-                lowRank.put(year, movie);
-            }
-        }
+    public Map<Integer, Movie> getLowRankFilmOfYear(Path pathToFile) {
+        Map<Integer, Movie> lowRank = reader.readFile(pathToFile).stream()
+                .filter(f -> f.getPremiere() != null)
+                .collect(Collectors.toMap(
+                        movie -> movie.getPremiere().getYear(),
+                        movie -> movie,
+                        (movie1, movie2) -> movie1.getScore() < movie2.getScore()
+                                ? movie1 : movie2
+                ));
         return lowRank;
     }
 }
