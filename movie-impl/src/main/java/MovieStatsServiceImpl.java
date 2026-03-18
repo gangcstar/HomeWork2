@@ -1,11 +1,5 @@
-package task1;
-
 import java.nio.file.Path;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.function.BinaryOperator;
 import java.util.stream.Collectors;
 
 public class MovieStatsServiceImpl implements MovieStatsService{

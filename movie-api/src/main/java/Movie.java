@@ -1,5 +1,3 @@
-package task1;
-
 import java.time.LocalDate;
 
 public class Movie implements Comparable<Movie> {

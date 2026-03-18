@@ -1,5 +1,3 @@
-package task1;
-
 import java.nio.file.Path;
 import java.util.List;
 

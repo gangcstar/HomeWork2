@@ -1,21 +1,21 @@
-package task1;
-
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Reader;
-import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.file.Path;
-import java.util.*;
 
 public class Stats {
-    static Path path = Path.of("src/main/resources/NetflixOriginals.csv");
     static CsvReader reader;
     static MovieStatsService stats;
+//    static Path path = Path.of("src/main/resources/NetflixOriginals.csv");
+    static Path path;
+    {
+        try {
+            path = Path.of(this.getClass().getClassLoader().getResource("./NetflixOriginals.csv").toURI());
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
+    }
     public static void main(String[] args) {
         reader = new CsvReaderImpl();
         stats = new MovieStatsServiceImpl(reader);
-        //List<Movie> movies = reader.readFile(path);
 
         //подсчет по жанрам
         System.out.println("-=Подсчет по жанрам=-");
