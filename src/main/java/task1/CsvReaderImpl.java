@@ -13,6 +13,8 @@ import java.util.Scanner;
 
 public class CsvReaderImpl implements CsvReader {
 
+    public static final String CSV_COLUMN_REGEX = ",(?=([^\"]*\"[^\"]*\")*[^\"]*$)";
+
     @Override
     public List<Movie> readFile(Path path) {
         List<Movie> movies = new ArrayList<>();
@@ -25,7 +27,7 @@ public class CsvReaderImpl implements CsvReader {
             reader.readLine();
             while ((line = reader.readLine()) != null) {
                 Movie movie = new Movie();
-                String[] split = line.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)");
+                String[] split = line.split(CSV_COLUMN_REGEX);
                 movie.setName(split[0].replaceAll("\"", "").trim());
                 movie.setGenre(split[1].replaceAll("\"", "").trim());
                 String date = split[2].replaceAll("\"", "").trim();
@@ -34,6 +36,7 @@ public class CsvReaderImpl implements CsvReader {
                         movie.setPremiere(LocalDate.parse(date, formatter));
                         break;
                     } catch (Exception e) {
+                        System.out.println("Неверный формат");
                     }
                 }
                 movie.setRuntime(Integer.parseInt(split[3].trim()));
